@@ -2,12 +2,22 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import CircleIcon from '@mui/icons-material/Circle';
+import { Box } from '@mui/material';
 
-export default function TowerMenu() {
+export default function TowerMenu({toggle}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const renderLabel = () => {
+    return(
+      <Box sx = {{display: 'flex', gap: 1}}>
+        <CircleIcon/> TOWER DATA
+      </Box>
+    )
+  }
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -21,9 +31,9 @@ export default function TowerMenu() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        sx={{color:'white'}}
+        sx={{color:'white', fontSize:'16px'}}
       >
-       TOWER DATA
+       {toggle === 0 ? renderLabel() : 'TOWER DATA'}
       </Button>
       <Menu
         id="basic-menu"

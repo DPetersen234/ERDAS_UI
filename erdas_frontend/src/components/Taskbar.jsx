@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -7,6 +7,7 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
+import {MenuItem} from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -16,13 +17,23 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TowerMenu from './TowerMenu';
 import WbCloudySharpIcon from '@mui/icons-material/WbCloudySharp';
+import { Select } from '@mui/material';
+import CircleIcon from '@mui/icons-material/Circle';
+
 const drawerWidth = 240;
 const navItems = ['DASHBOARD', 'OCEAN BREEZE', 'TOWER DATA', 'WINDFLOW', 'WINDROSE', 'SETTINGS'];
-
 function Taskbar(props) {
+  const [toggle, setToggle] = useState(0)
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const renderLabel = (label) => {
+    return(
+      <Box sx={{display: 'flex', gap: 1 }}>
+      <CircleIcon/>
+      {label}
+      </Box>
+    )
+  }
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -70,12 +81,12 @@ function Taskbar(props) {
            ERDAS
           </Typography>
           <Box sx={{ display: 'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
-            {navItems.map((item) => (
-              item === 'TOWER DATA' ? <TowerMenu/> : 
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
-            ))}
+          <MenuItem onClick={()=>setToggle(1)}>{toggle === 1 ? renderLabel('DASHBOARD') :'DASHBOARD'}</MenuItem>
+          <MenuItem onClick={()=>setToggle(2)}>{toggle === 2 ? renderLabel('OCEAN BREEZE'):'OCEAN BREEZE'}</MenuItem>
+          <MenuItem onClick ={()=> setToggle(0)}><TowerMenu  toggle={toggle}/></MenuItem>
+          <MenuItem onClick={()=>setToggle(3)}>{toggle === 3 ? renderLabel('WINDFLOW'):'WINDFLOW'}</MenuItem>
+          <MenuItem onClick={()=>setToggle(4)}>{toggle === 4 ? renderLabel('WINDROSE'):'WINDROSE'}</MenuItem>
+          <MenuItem onClick={()=>setToggle(5)}>{toggle === 5 ? renderLabel('SETTINGS'):'SETTINGS'}</MenuItem>
           </Box>
         </Toolbar>
       </AppBar>
